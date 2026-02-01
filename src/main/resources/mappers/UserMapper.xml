@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mybatisstudy.mapper.UserMapper">
+
+    <select id="listAllUsers"
+            resultType="com.mybatis.mybatisstudy.entity.User">
+        select *
+        from USER;
+    </select>
+
+    <insert id="insert" parameterType="com.mybatis.mybatisstudy.entity.User">
+        INSERT INTO `USER`(`name`, `pass_word`)
+        VALUES (#{name, jdbcType=VARCHAR}, #{passWord, jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertForEach">
+        INSERT INTO `USER`(`name`,`pass_word`) VALUES
+        <foreach collection="list" separator="," item="item">
+            (#{item.name},#{item.passWord})
+        </foreach>
+    </insert>
+
+    <select id="listUserByCursor"
+            resultType="com.mybatis.mybatisstudy.entity.User"
+            fetchSize="1000"
+            resultSetType="FORWARD_ONLY">
+        select *
+        from USER;
+    </select>
+
+</mapper>

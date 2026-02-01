@@ -1,0 +1,22 @@
+logging:
+  level:
+    com.mybatis.mybatisstudy.mapper: debug
+    org.mybatis: debug
+
+spring:
+  datasource:
+    # rewriteBatchedStatements=true 开启批处理模式
+    url: jdbc:mysql://127.0.0.1:3306/cloud?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&useCursorFetch=true&useServerPrepStmts=true
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      default-auto-commit: false
+mybatis:
+  mapper-locations: classpath*:/mappers/**/*.xml
+  # 注意属性名是短横线风格
+  type-aliases-package: com.mybatis.mybatisstudy.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
