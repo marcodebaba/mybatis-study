@@ -5,7 +5,6 @@ import com.mybatis.mybatisstudy.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.cursor.Cursor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
@@ -25,8 +24,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public class UserRepositoryImpl implements UserRepository {
-    @Autowired
-    UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -53,7 +51,6 @@ public class UserRepositoryImpl implements UserRepository {
                 // 每batchSize条打印一次分隔线
                 if (inBatch == batchSize) {
                     handler.handle(dataList, batchNo, total);
-                    //log.info(">>> 批次 {} 完成：本批 {} 条，累计 {} 条", batchNo, batchSize, total);
                     batchNo++;
                     inBatch = 0;   // 重置批内计数
                     dataList.clear();
@@ -62,7 +59,6 @@ public class UserRepositoryImpl implements UserRepository {
             // 收尾：处理最后不满batchSize的残批
             if (inBatch > 0) {
                 handler.handle(dataList, batchNo, total);
-                //log.info(">>> 批次 {} 完成：本批 {} 条（未满{batchSize}），累计 {} 条", batchNo, inBatch, batchSize, total);
             }
         } catch (IOException e) {
             log.error("Cursor scan failed after processing {} records", total, e);

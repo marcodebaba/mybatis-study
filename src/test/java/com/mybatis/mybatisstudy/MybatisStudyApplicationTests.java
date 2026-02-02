@@ -36,7 +36,7 @@ class MybatisStudyApplicationTests {
         for (int i = 0; i < MAXCOUNT; i++) {
             User user = new User();
             user.setName("test:" + i);
-            user.setPassWord("123456");
+            user.setPassword("123456");
             userList.add(user);
         }
     }

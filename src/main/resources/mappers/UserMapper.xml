@@ -2,21 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mybatisstudy.mapper.UserMapper">
 
-    <select id="listAllUsers"
-            resultType="com.mybatis.mybatisstudy.entity.User">
-        select *
-        from USER;
+    <select id="listAllUsers" resultType="com.mybatis.mybatisstudy.entity.User">
+        select id, name, pass_word as password, create_time as createTime
+        from USER
     </select>
 
-    <insert id="insert" parameterType="com.mybatis.mybatisstudy.entity.User">
+    <insert id="insert" parameterType="com.mybatis.mybatisstudy.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `USER`(`name`, `pass_word`)
-        VALUES (#{name, jdbcType=VARCHAR}, #{passWord, jdbcType=VARCHAR})
+        VALUES (#{name}, #{password})
     </insert>
 
-    <insert id="insertForEach">
-        INSERT INTO `USER`(`name`,`pass_word`) VALUES
+    <insert id="insertForEach" parameterType="list">
+        INSERT INTO `USER`(`name`, `pass_word`) VALUES
         <foreach collection="list" separator="," item="item">
-            (#{item.name},#{item.passWord})
+            (#{item.name}, #{item.password})
         </foreach>
     </insert>
 
@@ -24,8 +23,8 @@
             resultType="com.mybatis.mybatisstudy.entity.User"
             fetchSize="1000"
             resultSetType="FORWARD_ONLY">
-        select *
-        from USER;
+        select id, name, pass_word as password, create_time as createTime
+        from USER
     </select>
 
 </mapper>
