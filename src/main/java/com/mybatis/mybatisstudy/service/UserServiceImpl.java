@@ -24,21 +24,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    UserMapper userMapper;
-    SqlSessionFactory sqlSessionFactory;
+    private final UserMapper userMapper;
+    private final SqlSessionFactory sqlSessionFactory;
 
     @Override
     public void insertBatch(List<User> userList) {
-        SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         long startTime = System.currentTimeMillis();
-        userList.forEach(userMapper::insert);
-        // 一次性提交事务
-        sqlSession.commit();
-        // 关闭资源
-        sqlSession.close();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false)) {
+            UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+            userList.forEach(mapper::insert);
+            sqlSession.commit();
+        }
         long endTime = System.currentTimeMillis();
         log.info(">>> insertBatch总耗时：{}", endTime - startTime);
+
         //userList.parallelStream().forEach(userMapper::insert);
     }
 
