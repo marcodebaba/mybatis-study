@@ -28,7 +28,6 @@ class MybatisStudyApplicationTests {
     @Autowired
     DataSource dataSource;
 
-
     static List<User> userList = new ArrayList<>();
 
     @BeforeAll
@@ -70,6 +69,12 @@ class MybatisStudyApplicationTests {
         userService.insertForEach(userList);
         long end = System.currentTimeMillis();
         System.out.println("insertForEach时间：" + (end - start));
+    }
+
+    @Test
+    public void getUserById() {
+        User user = userService.getUserById(1L);
+        System.out.println(user);
     }
 
     @Test

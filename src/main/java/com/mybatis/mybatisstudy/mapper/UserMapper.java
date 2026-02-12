@@ -19,6 +19,8 @@ public interface UserMapper {
 
     List<User> listAllUsers();
 
+    User getUserById(Long id);
+
     boolean insertForEach(List<User> list);
 
     boolean insert(User user);

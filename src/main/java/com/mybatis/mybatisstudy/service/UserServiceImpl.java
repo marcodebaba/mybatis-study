@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author：marco.pan
@@ -44,6 +45,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void insertForEach(List<User> userList) {
         userMapper.insertForEach(userList);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        Objects.requireNonNull(id, "id must not be null");
+        return userRepository.getUserById(id);
     }
 
     @Override

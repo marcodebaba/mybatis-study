@@ -27,6 +27,11 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserMapper userMapper;
 
     @Override
+    public User getUserById(Long id) {
+        return userMapper.getUserById(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public void scanAllUsersByCursor(int batchSize, BatchHandler<User> handler) {
         if (batchSize <= 0) {

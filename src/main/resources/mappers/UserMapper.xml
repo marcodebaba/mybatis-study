@@ -7,6 +7,12 @@
         from USER
     </select>
 
+    <select id="getUserById" parameterType="long" resultType="com.mybatis.mybatisstudy.entity.User">
+        select id, name, pass_word as password, create_time as createTime
+        from USER
+        where id = #{id}
+    </select>
+
     <insert id="insert" parameterType="com.mybatis.mybatisstudy.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `USER`(`name`, `pass_word`)
         VALUES (#{name}, #{password})

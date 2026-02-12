@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserService {
     List<User> listAllUsers();
 
+    User getUserById(Long id);
+
     void insertBatch(List<User> userList);
 
     void insertForEach(List<User> userList);
